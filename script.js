@@ -1,4 +1,53 @@
-// DOM Elements
+// ==========================================
+// 1. CINEMATIC SCROLL REVEALS
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('appear');
+                observer.unobserve(entry.target); // Only animate once
+            }
+        });
+    }, observerOptions);
+
+    const fadeElements = document.querySelectorAll('.fade-in-up');
+    fadeElements.forEach(el => observer.observe(el));
+});
+
+// ==========================================
+// 2. DYNAMIC PORTFOLIO FILTERING
+// ==========================================
+const filterBtns = document.querySelectorAll('.filter-btn');
+const masonryItems = document.querySelectorAll('.masonry-item');
+
+filterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+        // Remove active class from all buttons, add to clicked
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const filterValue = btn.getAttribute('data-filter');
+
+        masonryItems.forEach(item => {
+            if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+                item.classList.remove('hidden');
+                // Quick reflow trigger to restart animation smoothly
+                item.style.animation = 'none';
+                item.offsetHeight; /* trigger reflow */
+                item.style.animation = null; 
+            } else {
+                item.classList.add('hidden');
+            }
+        });
+    });
+});
+
+// ==========================================
+// 3. ORDER MODAL & CHAT LOGIC
+// ==========================================
 const heroOrderBtn = document.getElementById('heroOrderBtn');
 const orderModal = document.getElementById('orderModal');
 const closeOrderModal = document.getElementById('closeOrderModal');
@@ -10,46 +59,28 @@ const closeChatBtn = document.getElementById('closeChatBtn');
 const chatBody = document.getElementById('chatBody');
 const chatFooter = document.getElementById('chatFooter');
 
-// Accounts Portal Elements
-const portalBtn = document.getElementById('openPortalBtn');
-const portalModal = document.getElementById('portalModal');
-const closePortalModal = document.getElementById('closePortalModal');
-const tabSignIn = document.getElementById('tabSignIn');
-const tabSignUp = document.getElementById('tabSignUp');
-const signupOnlyFields = document.querySelectorAll('.signup-only');
-const portalAuthForm = document.getElementById('portalAuthForm');
-
 // Fiverr-style Questions
 const chatFlow = [
-    { botText: "Briefly explain the 'climax' or most important moment of your video so I can design the thumbnail around it. (Note: Generic answers like 'good video' will be cancelled).", type: "text", placeholder: "Type your video climax..." },
+    { botText: "Briefly explain the 'climax' or most important moment of your video so I can design the thumbnail around it.", type: "text", placeholder: "Type your video climax..." },
     { botText: "What is the final Video Title, and what specific 2–4 words of text do you want printed on the thumbnail?", type: "text", placeholder: "Title & Text..." },
     { botText: "Which style best fits your channel's niche?", type: "select", options: ["High-Energy Gaming / Anime", "Clean / Documentary / Finance", "Vlog / Lifestyle", "Corporate / Brand"] },
     { botText: "Upload your resource file (Optional). Feel free to attach any specific references, logos, or cutouts.", type: "file" }
 ];
 let currentStep = 0;
 
-// ==========================================
-// ORDER MODAL & CHAT LOGIC
-// ==========================================
-heroOrderBtn.addEventListener('click', () => {
-    orderModal.classList.add('active');
-});
-
-closeOrderModal.addEventListener('click', () => {
-    orderModal.classList.remove('active');
-});
+heroOrderBtn.addEventListener('click', () => orderModal.classList.add('active'));
+closeOrderModal.addEventListener('click', () => orderModal.classList.remove('active'));
 
 chatToggleBtn.addEventListener('click', () => {
     chatWidget.classList.toggle('active');
     if (chatWidget.classList.contains('active') && chatBody.innerHTML === "") {
-        addMessage("Hey! Feel free to ask any questions, or click 'Get Your Design' to start an order.", 'bot');
-        chatFooter.innerHTML = "";
+        showTypingIndicator(() => {
+            addMessage("Hey! Feel free to ask any questions, or click 'Get Your Design' to start an order.", 'bot');
+        });
     }
 });
 
-closeChatBtn.addEventListener('click', () => {
-    chatWidget.classList.remove('active');
-});
+closeChatBtn.addEventListener('click', () => chatWidget.classList.remove('active'));
 
 quoteForm.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -67,6 +98,24 @@ function addMessage(text, sender) {
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
+// Bot Personality: Typing Delay
+function showTypingIndicator(callback) {
+    const typingDiv = document.createElement('div');
+    typingDiv.classList.add('msg', 'bot', 'typing-bubble');
+    typingDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+    
+    chatBody.appendChild(typingDiv);
+    chatBody.scrollTop = chatBody.scrollHeight;
+
+    // Random delay between 1.2s and 2s
+    const delay = Math.floor(Math.random() * 800) + 1200;
+    
+    setTimeout(() => {
+        typingDiv.remove();
+        callback();
+    }, delay);
+}
+
 function initActiveOrder(designType) {
     chatBody.innerHTML = "";
     currentStep = 0;
@@ -75,19 +124,21 @@ function initActiveOrder(designType) {
     badge.innerText = `Active Order: ${designType}`;
     chatBody.appendChild(badge);
 
-    setTimeout(() => {
+    showTypingIndicator(() => {
         addMessage("Quote request received! I just need a few specific details to start the work.", 'bot');
-        setTimeout(() => {
+        showTypingIndicator(() => {
             addMessage(chatFlow[currentStep].botText, 'bot');
             renderInput();
-        }, 800);
-    }, 400);
+        });
+    });
 }
 
 function renderInput() {
     chatFooter.innerHTML = "";
     if (currentStep >= chatFlow.length) {
-        addMessage("Perfect. We have submitted your order! Our team will review these assets and reach out to you shortly with pricing and time.", 'bot');
+        showTypingIndicator(() => {
+            addMessage("Perfect. We have submitted your order! Our team will review these assets and reach out to you shortly.", 'bot');
+        });
         return;
     }
 
@@ -105,14 +156,10 @@ function renderInput() {
             const sendBtn = document.getElementById('chatSendBtn');
             if (this.files && this.files.length > 0) {
                 document.getElementById('fileNameDisplay').innerText = this.files[0].name;
-                sendBtn.innerText = "Send";
-                sendBtn.style.backgroundColor = "var(--cyan)";
-                sendBtn.style.color = "#000";
+                sendBtn.innerText = "Send"; sendBtn.style.backgroundColor = "var(--cyan)"; sendBtn.style.color = "#000";
             } else {
                 document.getElementById('fileNameDisplay').innerText = "Select File (Optional)";
-                sendBtn.innerText = "Skip";
-                sendBtn.style.backgroundColor = "#555";
-                sendBtn.style.color = "#fff";
+                sendBtn.innerText = "Skip"; sendBtn.style.backgroundColor = "#555"; sendBtn.style.color = "#fff";
             }
         });
     }
@@ -132,11 +179,7 @@ function handleUserSubmit() {
     let userVal = "";
 
     if (chatFlow[currentStep].type === 'file') {
-        if (inputEl.files && inputEl.files.length > 0) {
-            userVal = "Uploaded: " + inputEl.files[0].name;
-        } else {
-            userVal = "Skipped (No file attached)";
-        }
+        userVal = (inputEl.files && inputEl.files.length > 0) ? "Uploaded: " + inputEl.files[0].name : "Skipped (No file attached)";
     } else {
         userVal = inputEl.value.trim();
         if (!userVal) return;
@@ -146,43 +189,57 @@ function handleUserSubmit() {
     chatFooter.innerHTML = "";
     currentStep++;
 
-    setTimeout(() => {
-        if (currentStep < chatFlow.length) {
+    if (currentStep < chatFlow.length) {
+        showTypingIndicator(() => {
             addMessage(chatFlow[currentStep].botText, 'bot');
-        }
-        renderInput();
-    }, 600);
+            renderInput();
+        });
+    } else {
+        renderInput(); // Triggers the final success message
+    }
 }
 
 // ==========================================
-// ACCOUNTS PORTAL LOGIC
+// 4. ACCOUNTS / COMMAND CENTER LOGIC
 // ==========================================
-portalBtn.addEventListener('click', () => {
-    portalModal.classList.add('active');
-});
+const portalBtn = document.getElementById('openPortalBtn');
+const portalModal = document.getElementById('portalModal');
+const closePortalModal = document.getElementById('closePortalModal');
+const portalContentBox = document.getElementById('portalContentBox');
 
-closePortalModal.addEventListener('click', () => {
-    portalModal.classList.remove('active');
-});
+const authSection = document.getElementById('authSection');
+const dashboardSection = document.getElementById('dashboardSection');
+
+const tabSignIn = document.getElementById('tabSignIn');
+const tabSignUp = document.getElementById('tabSignUp');
+const signupOnlyFields = document.querySelectorAll('.signup-only');
+const portalAuthForm = document.getElementById('portalAuthForm');
+
+portalBtn.addEventListener('click', () => portalModal.classList.add('active'));
+closePortalModal.addEventListener('click', () => portalModal.classList.remove('active'));
 
 tabSignIn.addEventListener('click', () => {
-    tabSignIn.classList.add('active');
-    tabSignUp.classList.remove('active');
+    tabSignIn.classList.add('active'); tabSignUp.classList.remove('active');
     signupOnlyFields.forEach(field => field.style.display = 'none');
     document.querySelector('.auth-submit-btn').innerText = "Access Dashboard";
 });
 
 tabSignUp.addEventListener('click', () => {
-    tabSignUp.classList.add('active');
-    tabSignIn.classList.remove('active');
+    tabSignUp.classList.add('active'); tabSignIn.classList.remove('active');
     signupOnlyFields.forEach(field => field.style.display = 'block');
     document.querySelector('.auth-submit-btn').innerText = "Create Account";
 });
 
+// Simulate Login & Transition to Option B Dashboard
 portalAuthForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const contactInfo = document.getElementById('authContact').value;
-    alert(`Success! Backend portal connection pending. Welcome, ${contactInfo}!`);
-    portalModal.classList.remove('active');
-    portalAuthForm.reset();
+    
+    // Hide Login, Expand Modal, Show Dashboard
+    authSection.style.display = 'none';
+    portalContentBox.classList.add('dashboard-active');
+    
+    setTimeout(() => {
+        dashboardSection.style.display = 'flex';
+        portalBtn.innerText = "MY DASHBOARD"; // Update nav button
+    }, 300); // Wait for modal resize transition
 });
