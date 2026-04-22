@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('appear');
-                observer.unobserve(entry.target); // Only animate once
+                observer.unobserve(entry.target); 
             }
         });
     }, observerOptions);
@@ -25,7 +25,6 @@ const masonryItems = document.querySelectorAll('.masonry-item');
 
 filterBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-        // Remove active class from all buttons, add to clicked
         filterBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
@@ -34,9 +33,8 @@ filterBtns.forEach(btn => {
         masonryItems.forEach(item => {
             if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
                 item.classList.remove('hidden');
-                // Quick reflow trigger to restart animation smoothly
                 item.style.animation = 'none';
-                item.offsetHeight; /* trigger reflow */
+                item.offsetHeight; 
                 item.style.animation = null; 
             } else {
                 item.classList.add('hidden');
@@ -46,12 +44,12 @@ filterBtns.forEach(btn => {
 });
 
 // ==========================================
-// 3. ORDER MODAL & CHAT LOGIC
+// 3. PRICING MODAL & CHAT LOGIC
 // ==========================================
 const heroOrderBtn = document.getElementById('heroOrderBtn');
 const orderModal = document.getElementById('orderModal');
 const closeOrderModal = document.getElementById('closeOrderModal');
-const quoteForm = document.getElementById('quoteForm');
+const pricingBtns = document.querySelectorAll('.tier-btn');
 
 const chatWidget = document.getElementById('chatWidget');
 const chatToggleBtn = document.getElementById('chatToggleBtn');
@@ -59,36 +57,39 @@ const closeChatBtn = document.getElementById('closeChatBtn');
 const chatBody = document.getElementById('chatBody');
 const chatFooter = document.getElementById('chatFooter');
 
-// Fiverr-style Questions
 const chatFlow = [
-    { botText: "Briefly explain the 'climax' or most important moment of your video so I can design the thumbnail around it.", type: "text", placeholder: "Type your video climax..." },
-    { botText: "What is the final Video Title, and what specific 2–4 words of text do you want printed on the thumbnail?", type: "text", placeholder: "Title & Text..." },
-    { botText: "Which style best fits your channel's niche?", type: "select", options: ["High-Energy Gaming / Anime", "Clean / Documentary / Finance", "Vlog / Lifestyle", "Corporate / Brand"] },
-    { botText: "Upload your resource file (Optional). Feel free to attach any specific references, logos, or cutouts.", type: "file" }
+    { botText: "What type of design are you looking for? (e.g., Minecraft Thumbnail, Tech Banner, Poster)", type: "text", placeholder: "Design type..." },
+    { botText: "Briefly explain the 'climax' or concept of the design.", type: "text", placeholder: "Type your concept..." },
+    { botText: "What specific 2–4 words of text do you want printed on the graphic?", type: "text", placeholder: "Title & Text..." },
+    { botText: "Upload your resource file (Optional). Attach references or logos.", type: "file" }
 ];
 let currentStep = 0;
 
+// Open Pricing Modal
 heroOrderBtn.addEventListener('click', () => orderModal.classList.add('active'));
 closeOrderModal.addEventListener('click', () => orderModal.classList.remove('active'));
 
+// Handle Pricing Package Selection
+pricingBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        const selectedPackage = e.target.getAttribute('data-package');
+        orderModal.classList.remove('active');
+        chatWidget.classList.add('active');
+        initActiveOrder(selectedPackage);
+    });
+});
+
+// Toggle Chat Widget Manually
 chatToggleBtn.addEventListener('click', () => {
     chatWidget.classList.toggle('active');
     if (chatWidget.classList.contains('active') && chatBody.innerHTML === "") {
         showTypingIndicator(() => {
-            addMessage("Hey! Feel free to ask any questions, or click 'Get Your Design' to start an order.", 'bot');
+            addMessage("Hey! Feel free to ask any questions, or click 'Get Your Design' to select a package.", 'bot');
         });
     }
 });
 
 closeChatBtn.addEventListener('click', () => chatWidget.classList.remove('active'));
-
-quoteForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const designType = document.getElementById('designTypeInput').value;
-    orderModal.classList.remove('active');
-    chatWidget.classList.add('active');
-    initActiveOrder(designType);
-});
 
 function addMessage(text, sender) {
     const msgDiv = document.createElement('div');
@@ -98,7 +99,6 @@ function addMessage(text, sender) {
     chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-// Bot Personality: Typing Delay
 function showTypingIndicator(callback) {
     const typingDiv = document.createElement('div');
     typingDiv.classList.add('msg', 'bot', 'typing-bubble');
@@ -107,25 +107,24 @@ function showTypingIndicator(callback) {
     chatBody.appendChild(typingDiv);
     chatBody.scrollTop = chatBody.scrollHeight;
 
-    // Random delay between 1.2s and 2s
     const delay = Math.floor(Math.random() * 800) + 1200;
-    
     setTimeout(() => {
         typingDiv.remove();
         callback();
     }, delay);
 }
 
-function initActiveOrder(designType) {
+function initActiveOrder(packageName) {
     chatBody.innerHTML = "";
     currentStep = 0;
+    
     const badge = document.createElement('div');
     badge.classList.add('order-badge');
-    badge.innerText = `Active Order: ${designType}`;
+    badge.innerText = `Active Order: ${packageName}`;
     chatBody.appendChild(badge);
 
     showTypingIndicator(() => {
-        addMessage("Quote request received! I just need a few specific details to start the work.", 'bot');
+        addMessage(`Awesome choice! You selected the ${packageName}. I just need a few details so our team can get started.`, 'bot');
         showTypingIndicator(() => {
             addMessage(chatFlow[currentStep].botText, 'bot');
             renderInput();
@@ -137,7 +136,8 @@ function renderInput() {
     chatFooter.innerHTML = "";
     if (currentStep >= chatFlow.length) {
         showTypingIndicator(() => {
-            addMessage("Perfect. We have submitted your order! Our team will review these assets and reach out to you shortly.", 'bot');
+            // This is where EmailJS will eventually fire
+            addMessage("Perfect. We have captured all details! Please log in to your Account Dashboard to track the progress.", 'bot');
         });
         return;
     }
@@ -146,9 +146,6 @@ function renderInput() {
 
     if (stepData.type === 'text') {
         chatFooter.innerHTML = `<input type="text" class="chat-input" id="chatInput" placeholder="${stepData.placeholder}"> <button class="chat-send" id="chatSendBtn">Send</button>`;
-    } else if (stepData.type === 'select') {
-        let optionsHtml = stepData.options.map(opt => `<option value="${opt}">${opt}</option>`).join('');
-        chatFooter.innerHTML = `<select class="chat-select" id="chatInput">${optionsHtml}</select> <button class="chat-send" id="chatSendBtn">Send</button>`;
     } else if (stepData.type === 'file') {
         chatFooter.innerHTML = `<label class="chat-file-btn"><span id="fileNameDisplay">Select File (Optional)</span><input type="file" id="chatInput" style="display:none;"></label> <button class="chat-send" id="chatSendBtn" style="background-color: #555; color: #fff;">Skip</button>`;
         
@@ -195,7 +192,7 @@ function handleUserSubmit() {
             renderInput();
         });
     } else {
-        renderInput(); // Triggers the final success message
+        renderInput(); 
     }
 }
 
@@ -230,16 +227,14 @@ tabSignUp.addEventListener('click', () => {
     document.querySelector('.auth-submit-btn').innerText = "Create Account";
 });
 
-// Simulate Login & Transition to Option B Dashboard
 portalAuthForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    
-    // Hide Login, Expand Modal, Show Dashboard
     authSection.style.display = 'none';
     portalContentBox.classList.add('dashboard-active');
     
     setTimeout(() => {
         dashboardSection.style.display = 'flex';
-        portalBtn.innerText = "MY DASHBOARD"; // Update nav button
-    }, 300); // Wait for modal resize transition
+        // Reset mobile icon to Dashboard mode
+        document.querySelector('.portal-text').innerText = "DASHBOARD"; 
+    }, 300);
 });
