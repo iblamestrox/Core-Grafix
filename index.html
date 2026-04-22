@@ -16,40 +16,48 @@
         <button class="btn portal-btn" id="openPortalBtn">ACCOUNTS</button>
     </nav>
 
-    <section class="hero">
+    <section class="hero fade-in-up">
         <h1>Cinematic Social Media<br>Designs That<br>Command Attention.</h1>
         <p>Custom thumbnails, banners, and posters built to stop the scroll and elevate your brand.</p>
         <button class="btn glow-btn" id="heroOrderBtn">GET YOUR DESIGN</button>
     </section>
 
     <section class="services">
-        <div class="service-card">
+        <div class="service-card fade-in-up">
             <h3>High-CTR Thumbnails</h3>
             <p>Custom compositions designed to maximize clicks.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card fade-in-up" style="transition-delay: 0.2s;">
             <h3>Channel Branding</h3>
             <p>Cohesive, cinematic banners and profile elements.</p>
         </div>
-        <div class="service-card">
+        <div class="service-card fade-in-up" style="transition-delay: 0.4s;">
             <h3>Promotional Posters</h3>
             <p>Striking graphics for announcements and campaigns.</p>
         </div>
     </section>
 
-    <section class="portfolio">
+    <section class="portfolio fade-in-up">
         <h2 class="section-title">The Archive</h2>
-        <div class="masonry-grid">
-            <div class="masonry-item placeholder-16-9"></div>
-            <div class="masonry-item placeholder-square"></div>
-            <div class="masonry-item placeholder-banner"></div>
-            <div class="masonry-item placeholder-16-9"></div>
-            <div class="masonry-item placeholder-square"></div>
-            <div class="masonry-item placeholder-16-9"></div>
+        
+        <div class="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="thumbnail">Thumbnails</button>
+            <button class="filter-btn" data-filter="banner">Banners</button>
+            <button class="filter-btn" data-filter="poster">Posters</button>
+        </div>
+
+        <div class="masonry-grid" id="portfolioGrid">
+            <div class="masonry-item placeholder-16-9 fade-in-up" data-category="thumbnail"></div>
+            <div class="masonry-item placeholder-square fade-in-up" data-category="poster"></div>
+            <div class="masonry-item placeholder-banner fade-in-up" data-category="banner"></div>
+            <div class="masonry-item placeholder-16-9 fade-in-up" data-category="thumbnail"></div>
+            <div class="masonry-item placeholder-square fade-in-up" data-category="poster"></div>
+            <div class="masonry-item placeholder-16-9 fade-in-up" data-category="thumbnail"></div>
         </div>
     </section>
 
-    <footer class="site-footer">
+    <footer class="site-footer fade-in-up">
         <div class="footer-left">
             <div class="founder-card">
                 <div class="founder-avatar"></div>
@@ -99,30 +107,65 @@
     </div>
 
     <div class="modal-overlay" id="portalModal">
-        <div class="modal-content">
+        <div class="modal-content" id="portalContentBox">
             <button class="close-btn" id="closePortalModal">&times;</button>
-            <h2>Accounts</h2>
             
-            <div class="auth-tabs">
-                <button class="auth-tab active" id="tabSignIn">Sign In</button>
-                <button class="auth-tab" id="tabSignUp">Sign Up</button>
+            <div id="authSection">
+                <h2>Accounts</h2>
+                <div class="auth-tabs">
+                    <button class="auth-tab active" id="tabSignIn">Sign In</button>
+                    <button class="auth-tab" id="tabSignUp">Sign Up</button>
+                </div>
+                <form id="portalAuthForm">
+                    <div class="form-group signup-only" style="display: none;">
+                        <label>Full Name</label>
+                        <input type="text" id="authName" placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Email or Discord Username</label>
+                        <input type="text" id="authContact" placeholder="email@example.com or User#1234" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="authPass" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn auth-submit-btn">Access Dashboard</button>
+                </form>
             </div>
 
-            <form id="portalAuthForm">
-                <div class="form-group signup-only" style="display: none;">
-                    <label>Full Name</label>
-                    <input type="text" id="authName" placeholder="Your Name">
+            <div id="dashboardSection" style="display: none;" class="dashboard-layout">
+                <div class="dash-sidebar">
+                    <h3 class="dash-title">Order History</h3>
+                    <ul class="history-list">
+                        <li class="history-item active">
+                            <span class="history-id">#CG-102</span>
+                            <span class="history-desc">Minecraft Thumbnail</span>
+                        </li>
+                        <li class="history-item">
+                            <span class="history-id">#CG-084</span>
+                            <span class="history-desc">Tech Vlog Banner</span>
+                        </li>
+                        <li class="history-item">
+                            <span class="history-id">#CG-021</span>
+                            <span class="history-desc">Brand Poster</span>
+                        </li>
+                    </ul>
                 </div>
-                <div class="form-group">
-                    <label>Email or Discord Username</label>
-                    <input type="text" id="authContact" placeholder="email@example.com or User#1234" required>
+                <div class="dash-main">
+                    <div class="dash-header">
+                        <h3>Order #CG-102</h3>
+                        <span class="status-badge in-progress">In Progress</span>
+                    </div>
+                    <div class="dash-chat-mock">
+                        <div class="msg user">I need the zombie to look terrifying.</div>
+                        <div class="msg bot">Understood. Adding cinematic red rim-lighting to the zombie. Sending draft tomorrow!</div>
+                    </div>
+                    <div class="dash-action">
+                        <button class="btn" style="width: 100%; padding: 0.8rem;">START NEW ORDER</button>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label>Password</label>
-                    <input type="password" id="authPass" placeholder="••••••••" required>
-                </div>
-                <button type="submit" class="btn auth-submit-btn">Access Dashboard</button>
-            </form>
+            </div>
+
         </div>
     </div>
 
