@@ -4,8 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Core Grafix | Cinematic Social Media Designs</title>
+    
+    <meta property="og:title" content="Core Grafix | Cinematic Social Media Designs">
+    <meta property="og:description" content="We build custom, cinematic thumbnails and banners that stop the scroll and maximize your CTR.">
+    <meta property="og:image" content="https://i.ibb.co/xKvxXBPR/Core-Grafix-Logo.png">
+    <meta property="og:url" content="https://coregrafix.in">
+    <meta property="og:type" content="website">
+
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+       (function(){
+          // Initialize EmailJS - REPLACE WITH YOUR ACTUAL PUBLIC KEY
+          emailjs.init("YOUR_PUBLIC_KEY_HERE"); 
+       })();
+    </script>
 </head>
 <body>
     <nav>
@@ -45,14 +60,12 @@
 
     <section class="portfolio fade-in-up">
         <h2 class="section-title">The Archive</h2>
-        
         <div class="portfolio-filters">
             <button class="filter-btn active" data-filter="all">All</button>
             <button class="filter-btn" data-filter="thumbnail">Thumbnails</button>
             <button class="filter-btn" data-filter="banner">Banners</button>
             <button class="filter-btn" data-filter="poster">Posters</button>
         </div>
-
         <div class="masonry-grid" id="portfolioGrid">
             <div class="masonry-item placeholder-16-9 fade-in-up" data-category="thumbnail"></div>
             <div class="masonry-item placeholder-square fade-in-up" data-category="poster"></div>
@@ -60,6 +73,60 @@
             <div class="masonry-item placeholder-16-9 fade-in-up" data-category="thumbnail"></div>
             <div class="masonry-item placeholder-square fade-in-up" data-category="poster"></div>
             <div class="masonry-item placeholder-16-9 fade-in-up" data-category="thumbnail"></div>
+        </div>
+    </section>
+
+    <section class="testimonials fade-in-up">
+        <h2 class="section-title" style="font-size: 2rem;">Client Success</h2>
+        <div class="slider-container">
+            <div class="slider-track">
+                <div class="test-card">
+                    <p class="test-quote">"Core Grafix redesigned our thumbnail and our Click-Through Rate jumped from 3% to 8%!"</p>
+                    <p class="test-author">— Tech Vlog Creator</p>
+                </div>
+                <div class="test-card">
+                    <p class="test-quote">"Best investment for my channel. The A/B variations in the Gold Pack are a game changer."</p>
+                    <p class="test-author">— Gaming Channel</p>
+                </div>
+                <div class="test-card">
+                    <p class="test-quote">"Fast delivery and cinematic quality. It genuinely looks like a movie poster."</p>
+                    <p class="test-author">— Web3 Brand</p>
+                </div>
+                <div class="test-card">
+                    <p class="test-quote">"Core Grafix redesigned our thumbnail and our Click-Through Rate jumped from 3% to 8%!"</p>
+                    <p class="test-author">— Tech Vlog Creator</p>
+                </div>
+                <div class="test-card">
+                    <p class="test-quote">"Best investment for my channel. The A/B variations in the Gold Pack are a game changer."</p>
+                    <p class="test-author">— Gaming Channel</p>
+                </div>
+                <div class="test-card">
+                    <p class="test-quote">"Fast delivery and cinematic quality. It genuinely looks like a movie poster."</p>
+                    <p class="test-author">— Web3 Brand</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="faq fade-in-up">
+        <h2 class="section-title" style="font-size: 2rem;">Frequently Asked Questions</h2>
+        <div class="faq-list">
+            <div class="faq-item">
+                <button class="faq-question">How fast will I get my design?</button>
+                <div class="faq-answer"><p>24-48 hours depending on the tier you select (Iron, Silver, or Gold).</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">What if I don't like the first draft?</button>
+                <div class="faq-answer"><p>We offer generous revisions based on your package (10, 20, or Unlimited) to make sure you are 100% happy with the cinematic details.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">Do you provide the source files?</button>
+                <div class="faq-answer"><p>Yes, our Gold Pack includes fully layered .PSD files for your own internal archives.</p></div>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question">How does the A/B testing work?</button>
+                <div class="faq-answer"><p>In our Silver and Gold packs, we provide alternate color/text versions of your thumbnail so you can test which gets the highest CTR on YouTube.</p></div>
+            </div>
         </div>
     </section>
 
@@ -80,16 +147,17 @@
                 </div>
             </div>
         </div>
-        
+        <div class="footer-middle">
+            <a href="#" id="openTOS">Terms of Service</a>
+            <span class="legal-divider">|</span>
+            <a href="#" id="openRefund">Refund Policy</a>
+        </div>
         <div class="footer-right">
-            <a href="https://www.instagram.com/core_grafix/?utm_source=ig_web_button_share_sheet" target="_blank" class="social-icon">
+            <a href="https://www.instagram.com/core_grafix/" target="_blank" class="social-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
             </a>
             <a href="#" class="social-icon">
                 <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.77 7.46H14.5v-1.9c0-.9.6-1.1 1-1.1h3V.5h-4.33C10.24.5 9.5 3.44 9.5 5.32v2.15h-3v4h3v12h5v-12h3.85l.42-4z"/></svg>
-            </a>
-            <a href="#" class="social-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 22.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
             </a>
         </div>
     </footer>
@@ -110,7 +178,7 @@
                         <li>✔️ 10 Revisions</li>
                         <li>✔️ Watermarked Draft</li>
                     </ul>
-                    <button class="btn tier-btn" data-package="Iron Pack (1 Design)">Select Iron</button>
+                    <button class="btn tier-btn" data-package="Iron Pack (1 Design)" data-price="299">Select Iron</button>
                 </div>
 
                 <div class="pricing-card popular">
@@ -124,7 +192,7 @@
                         <li>✔️ 20 Revisions</li>
                         <li>✔️ 1 A/B Variation per design</li>
                     </ul>
-                    <button class="btn tier-btn popular-btn" data-package="Silver Pack (3 Designs)">Select Silver</button>
+                    <button class="btn tier-btn popular-btn" data-package="Silver Pack (3 Designs)" data-price="749">Select Silver</button>
                 </div>
 
                 <div class="pricing-card">
@@ -138,7 +206,7 @@
                         <li>✔️ 2 A/B Variations per design</li>
                         <li>✔️ Source Files Included (.PSD)</li>
                     </ul>
-                    <button class="btn tier-btn" data-package="Gold Pack (5 Designs)">Select Gold</button>
+                    <button class="btn tier-btn" data-package="Gold Pack (5 Designs)" data-price="999">Select Gold</button>
                 </div>
             </div>
         </div>
@@ -154,14 +222,22 @@
                     <button class="auth-tab active" id="tabSignIn">Sign In</button>
                     <button class="auth-tab" id="tabSignUp">Sign Up</button>
                 </div>
+                
+                <button type="button" class="btn google-btn">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="#EA4335" d="M12.5 5.2c1.7 0 3.2.6 4.3 1.7l3.2-3.2C18 1.8 15.4.6 12.5.6 7.4.6 3 4.1 1.2 8.6l3.8 2.9c.9-2.8 3.5-4.8 6.5-4.8z"/><path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12.5v4.4h6.3c-.3 1.4-1.1 2.6-2.2 3.5l3.5 2.7c2-1.9 3.2-4.7 3.2-7.8z"/><path fill="#FBBC05" d="M5.1 14.5c-.2-.7-.3-1.4-.3-2.2s.1-1.5.3-2.2L1.3 7.3C.5 8.8 0 10.5 0 12.3s.5 3.5 1.3 5l3.8-2.8z"/><path fill="#34A853" d="M12.5 24c3.1 0 5.7-1 7.6-2.8l-3.5-2.7c-1 .7-2.3 1.1-3.9 1.1-3.1 0-5.7-2-6.6-4.9l-3.8 2.9C4.1 21.6 8 24 12.5 24z"/></svg>
+                    Continue with Google
+                </button>
+
+                <div class="auth-divider"><span>OR</span></div>
+
                 <form id="portalAuthForm">
                     <div class="form-group signup-only" style="display: none;">
                         <label>Full Name</label>
                         <input type="text" id="authName" placeholder="Your Name">
                     </div>
                     <div class="form-group">
-                        <label>Email or Discord Username</label>
-                        <input type="text" id="authContact" placeholder="email@example.com or User#1234" required>
+                        <label>Email Address</label>
+                        <input type="email" id="authContact" placeholder="you@example.com" required>
                     </div>
                     <div class="form-group">
                         <label>Password</label>
@@ -174,42 +250,33 @@
             <div id="dashboardSection" style="display: none;" class="dashboard-layout">
                 <div class="dash-sidebar">
                     <h3 class="dash-title">Order History</h3>
-                    <ul class="history-list">
-                        <li class="history-item active">
-                            <span class="history-id">#CG-102</span>
-                            <span class="history-desc">Minecraft Thumbnail</span>
-                        </li>
-                        <li class="history-item">
-                            <span class="history-id">#CG-084</span>
-                            <span class="history-desc">Tech Vlog Banner</span>
-                        </li>
-                    </ul>
+                    <ul class="history-list" id="dashHistoryList">
+                        </ul>
                 </div>
                 <div class="dash-main">
                     <div class="dash-header">
-                        <h3>Order #CG-102</h3>
-                        <span class="status-badge in-progress">In Progress</span>
+                        <h3 id="dashOrderTitle">Order #CG-103</h3>
+                        <span class="status-badge awaiting-deposit">Awaiting 50% Deposit</span>
                     </div>
-                    <div class="dash-chat-mock">
-                        <div class="msg user">I need the zombie to look terrifying.</div>
-                        <div class="msg bot">Understood. Adding cinematic red rim-lighting to the zombie. Sending draft tomorrow!</div>
-                    </div>
-                    <div class="dash-action">
-                        <button class="btn" style="width: 100%; padding: 0.8rem;">START NEW ORDER</button>
+                    <div class="deposit-box">
+                        <p style="color: var(--text-muted); margin-bottom: 10px;">To initiate your project and secure your spot in our queue, please pay the 50% upfront deposit.</p>
+                        <h2 style="font-size: 2.5rem; color: #fff; margin-bottom: 20px;">₹<span id="depositAmount">0</span></h2>
+                        <button class="btn" style="width: 100%; padding: 1rem; background-color: #00ff80; color: #000;">PAY SECURE DEPOSIT</button>
+                        <p style="font-size: 0.75rem; color: #555; margin-top: 10px; text-align: center;">Payments secured via Stripe/UPI.</p>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <button class="chat-toggle-btn" id="chatToggleBtn">
-        <svg viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            <line x1="9" y1="9" x2="15" y2="9"></line>
-            <line x1="9" y1="13" x2="15" y2="13"></line>
-        </svg>
-    </button>
+    <div class="modal-overlay" id="legalModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <button class="close-btn" id="closeLegalModal">&times;</button>
+            <h2 id="legalTitle">Legal</h2>
+            <div id="legalBody" style="font-size: 0.9rem; color: #ccc; max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                </div>
+        </div>
+    </div>
 
     <div class="chat-widget" id="chatWidget">
         <div class="chat-header">
