@@ -13,7 +13,13 @@
             <img src="https://i.ibb.co/xKvxXBPR/Core-Grafix-Logo.png" alt="Core Grafix Logo" class="nav-logo">
             <div class="logo-text">CORE<span>GRAFIX</span></div>
         </div>
-        <button class="btn portal-btn" id="openPortalBtn">ACCOUNTS</button>
+        <button class="btn portal-btn" id="openPortalBtn">
+            <svg class="portal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span class="portal-text">ACCOUNTS</span>
+        </button>
     </nav>
 
     <section class="hero fade-in-up">
@@ -89,20 +95,52 @@
     </footer>
 
     <div class="modal-overlay" id="orderModal">
-        <div class="modal-content">
+        <div class="modal-content pricing-modal">
             <button class="close-btn" id="closeOrderModal">&times;</button>
-            <h2>Project Intake</h2>
-            <form id="quoteForm">
-                <div class="form-group">
-                    <label>Design Type</label>
-                    <input type="text" id="designTypeInput" placeholder="e.g., Minecraft Gameplay Thumbnail" required>
+            <h2 style="text-align: center; margin-bottom: 2rem;">Select Your Package</h2>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <h3 class="tier-name">Iron Pack</h3>
+                    <div class="tier-price">₹299</div>
+                    <p class="tier-desc">1 Custom Design</p>
+                    <hr>
+                    <ul class="tier-features">
+                        <li>✔️ Delivery in 24 Hours</li>
+                        <li>✔️ 10 Revisions</li>
+                        <li>✔️ Watermarked Draft</li>
+                    </ul>
+                    <button class="btn tier-btn" data-package="Iron Pack (1 Design)">Select Iron</button>
                 </div>
-                <div class="form-group">
-                    <label>Overall Vibe / Concept</label>
-                    <input type="text" id="vibeInput" placeholder="e.g., Dark, Cinematic, Minimal" required>
+
+                <div class="pricing-card popular">
+                    <div class="popular-badge">MOST POPULAR</div>
+                    <h3 class="tier-name">Silver Pack</h3>
+                    <div class="tier-price">₹749</div>
+                    <p class="tier-desc">3 Custom Designs</p>
+                    <hr>
+                    <ul class="tier-features">
+                        <li>✔️ Delivery in 24 Hours</li>
+                        <li>✔️ 20 Revisions</li>
+                        <li>✔️ 1 A/B Variation per design</li>
+                    </ul>
+                    <button class="btn tier-btn popular-btn" data-package="Silver Pack (3 Designs)">Select Silver</button>
                 </div>
-                <button type="submit" class="btn" style="width: 100%; margin-top: 1rem;">Submit & Continue</button>
-            </form>
+
+                <div class="pricing-card">
+                    <h3 class="tier-name">Gold Pack</h3>
+                    <div class="tier-price">₹999</div>
+                    <p class="tier-desc">5 Custom Designs</p>
+                    <hr>
+                    <ul class="tier-features">
+                        <li>✔️ Delivery in 48 Hours</li>
+                        <li>✔️ <strong>Unlimited Revisions</strong></li>
+                        <li>✔️ 2 A/B Variations per design</li>
+                        <li>✔️ Source Files Included (.PSD)</li>
+                    </ul>
+                    <button class="btn tier-btn" data-package="Gold Pack (5 Designs)">Select Gold</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -144,10 +182,6 @@
                         <li class="history-item">
                             <span class="history-id">#CG-084</span>
                             <span class="history-desc">Tech Vlog Banner</span>
-                        </li>
-                        <li class="history-item">
-                            <span class="history-id">#CG-021</span>
-                            <span class="history-desc">Brand Poster</span>
                         </li>
                     </ul>
                 </div>
