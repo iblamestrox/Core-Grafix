@@ -16,10 +16,12 @@
     
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script type="text/javascript">
-       (function(){
-          emailjs.init("W-TYBUHVW1kxRcKP0"); 
-       })();
+       (function(){ emailjs.init("W-TYBUHVW1kxRcKP0"); })();
     </script>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div id="preloader" class="preloader">
@@ -32,7 +34,7 @@
             <div class="logo-text">CORE<span>GRAFIX</span></div>
         </div>
         <button class="btn portal-btn" id="openPortalBtn">
-            <svg class="portal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+            <svg class="portal-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
                 <circle cx="12" cy="7" r="4"></circle>
             </svg>
@@ -254,14 +256,19 @@
                 </div>
                 <div class="dash-main">
                     
-                    <div id="dashWelcome" style="display: none; text-align: center; padding: 4rem 1rem;">
-                        <h2 style="color: var(--cyan); margin-bottom: 1rem;">Welcome to your Dashboard</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 1rem; margin-bottom: 1.5rem;">
+                        <h2 id="welcomeName" style="color: #fff; font-size: 1.5rem;">Welcome</h2>
+                        <span id="dashUIDDisplay" style="background: #111; border: 1px solid #333; padding: 0.4rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; color: var(--cyan);">CG#----</span>
+                    </div>
+
+                    <div id="dashWelcome" style="display: none; text-align: center; padding: 3rem 1rem;">
+                        <h2 style="color: var(--cyan); margin-bottom: 1rem;">Dashboard Active</h2>
                         <p style="color: var(--text-muted);">You currently have no active orders.<br>Browse our packages to start a new design project.</p>
                     </div>
 
                     <div id="dashOrder" style="display: none;">
-                        <div class="dash-header">
-                            <h3 id="dashOrderTitle">Order #CG-NEW</h3>
+                        <div class="dash-header" style="border: none; padding: 0; margin-bottom: 1rem;">
+                            <h3 id="dashOrderTitle">Order Details</h3>
                             <span id="dashStatusBadge" class="status-badge awaiting-deposit">Awaiting 50% Deposit</span>
                         </div>
                         <div class="deposit-box" id="depositBoxContent">
