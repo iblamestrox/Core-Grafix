@@ -141,10 +141,16 @@ nav { padding: 2rem 5%; display: flex; justify-content: space-between; align-ite
 
 .deposit-box { background: #000; border: 1px dashed #555; padding: 2rem; border-radius: 8px; text-align: center; margin-top: 2rem; }
 
-/* Auth Forms */
+/* Auth Forms & Eye Icon */
 .form-group { margin-bottom: 1.5rem; }
 .form-group label { display: block; margin-bottom: 0.5rem; color: var(--text-muted); font-size: 0.9rem; }
 .form-group input { width: 100%; padding: 0.8rem; background: #000; border: 1px solid #333; color: #fff; border-radius: 4px; }
+.password-wrapper { position: relative; }
+.password-wrapper input { padding-right: 45px; } /* Room for eye icon */
+.eye-btn { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: none; border: none; color: var(--text-muted); cursor: pointer; display: flex; justify-content: center; align-items: center; padding: 5px; }
+.eye-btn:hover { color: var(--cyan); }
+.eye-btn svg { width: 20px; height: 20px; }
+
 .auth-tabs { display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid #333; padding-bottom: 0.5rem; }
 .auth-tab { background: none; border: none; color: var(--text-muted); font-size: 1.1rem; cursor: pointer; font-weight: 700; }
 .auth-tab.active { color: var(--cyan); }
