@@ -57,7 +57,7 @@ filterBtns.forEach(btn => {
 });
 
 // ==========================================
-// 3. PRICING & CHAT LOGIC (Soft Gate)
+// 3. PRICING & CHAT LOGIC
 // ==========================================
 const heroOrderBtn = document.getElementById('heroOrderBtn');
 const orderModal = document.getElementById('orderModal');
@@ -139,10 +139,28 @@ function handleUserSubmit() {
 }
 
 // ==========================================
-// 4. AUTH & V1.2 DASHBOARD LOGIC (WITH UIDs)
+// 4. AUTH, UI & FIREBASE ENGINE 
 // ==========================================
 const portalBtn = document.getElementById('openPortalBtn');
 const closePortalModal = document.getElementById('closePortalModal');
+
+// Password Visibility Toggle
+const togglePassword = document.getElementById('togglePassword');
+const authPass = document.getElementById('authPass');
+const eyeOpen = document.getElementById('eyeOpen');
+const eyeClosed = document.getElementById('eyeClosed');
+
+togglePassword.addEventListener('click', () => {
+    if (authPass.getAttribute('type') === 'password') {
+        authPass.setAttribute('type', 'text');
+        eyeOpen.style.display = 'none';
+        eyeClosed.style.display = 'block';
+    } else {
+        authPass.setAttribute('type', 'password');
+        eyeOpen.style.display = 'block';
+        eyeClosed.style.display = 'none';
+    }
+});
 
 // Open Accounts Directly
 portalBtn.addEventListener('click', () => {
@@ -152,15 +170,16 @@ portalBtn.addEventListener('click', () => {
 
 closePortalModal.addEventListener('click', () => portalModal.classList.remove('active'));
 
+// Tab Listeners (dynamically updates the Submit button text)
 document.getElementById('tabSignIn').addEventListener('click', (e) => {
     e.target.classList.add('active'); document.getElementById('tabSignUp').classList.remove('active');
-    document.querySelector('.auth-submit-btn').innerText = "Access Dashboard";
+    document.querySelector('.auth-submit-btn').innerText = "Sign In";
     document.querySelectorAll('.signup-only').forEach(el => el.style.display = 'none');
 });
 
 document.getElementById('tabSignUp').addEventListener('click', (e) => {
     e.target.classList.add('active'); document.getElementById('tabSignIn').classList.remove('active');
-    document.querySelector('.auth-submit-btn').innerText = "Create Account";
+    document.querySelector('.auth-submit-btn').innerText = "Sign Up";
     document.querySelectorAll('.signup-only').forEach(el => el.style.display = 'block');
 });
 
@@ -168,7 +187,9 @@ document.getElementById('tabSignUp').addEventListener('click', (e) => {
 async function finalizeLoginAndSendEmail(userEmail) {
     let name = document.getElementById('authName').value || "Client";
     const pass = document.getElementById('authPass').value;
-    const isSignUp = document.querySelector('.auth-submit-btn').innerText === "Create Account";
+    
+    // FIREBASE BUG FIX: Checks the active tab to safely determine Sign Up vs Sign In
+    const isSignUp = document.getElementById('tabSignUp').classList.contains('active');
     let finalUID = "CG#----";
 
     try {
@@ -185,7 +206,7 @@ async function finalizeLoginAndSendEmail(userEmail) {
             else if (userEmail === "vermasaksham882@gmail.com") finalUID = `CG#01${currentYear}`;
             else if (userEmail === "armazaid406@gmail.com") finalUID = `CG#02${currentYear}`;
             else {
-                // Generate sequential ID based on total users in database
+                // Generate sequential ID
                 const usersRef = await db.collection("users").get();
                 const count = usersRef.size + 1; 
                 const paddedCount = count.toString().padStart(2, '0'); // Makes '5' into '05'
@@ -198,7 +219,7 @@ async function finalizeLoginAndSendEmail(userEmail) {
             });
 
         } else {
-            // Logging in an existing user - grab their ID from database
+            // Sign In
             userCredential = await auth.signInWithEmailAndPassword(userEmail, pass);
             const userDoc = await db.collection("users").doc(userCredential.user.uid).get();
             if (userDoc.exists) {
@@ -230,7 +251,12 @@ async function finalizeLoginAndSendEmail(userEmail) {
     }
 }
 
-document.getElementById('portalAuthForm').addEventListener('submit', (e) => { e.preventDefault(); finalizeLoginAndSendEmail(document.getElementById('authContact').value); });
+// BUG FIX: Uses .trim() to chop off hidden spaces caused by phone Auto-Fill
+document.getElementById('portalAuthForm').addEventListener('submit', (e) => { 
+    e.preventDefault(); 
+    const cleanedEmail = document.getElementById('authContact').value.trim();
+    finalizeLoginAndSendEmail(cleanedEmail); 
+});
 
 function renderDashboard(clientName, clientUID) {
     document.getElementById('authSection').style.display = 'none';
