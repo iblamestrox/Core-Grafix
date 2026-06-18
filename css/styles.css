@@ -1,0 +1,70 @@
+/* styles.css — Core Grafix cinematic theme */
+:root{
+  --bg:#050505;
+  --surface:#111111;
+  --surface-2:#1a1a1a;
+  --text:#ffffff;
+  --accent:#00e5ff;
+  --accent-shadow: rgba(0,229,255,0.5);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  background:var(--bg);
+  color:var(--text);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+}
+.container{max-width:1100px;margin:0 auto;padding:28px}
+.site-header{position:sticky;top:0;background:linear-gradient(180deg, rgba(5,5,5,0.6), rgba(5,5,5,0.2));backdrop-filter: blur(6px);z-index:30}
+.header-inner{display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}
+.brand img{height:42px}
+.brand-name{font-weight:700;letter-spacing:0.6px}
+.nav .btn{margin-left:12px}
+.btn{background:transparent;color:var(--text);border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:8px;cursor:pointer}
+.btn-primary{background:linear-gradient(90deg,var(--accent),#00c7ff);color:#000;border:none;padding:12px 18px;font-weight:700}
+.btn-accent{box-shadow:0 6px 20px var(--accent-shadow);border:none;background:transparent;outline:2px solid rgba(0,229,255,0.06)}
+.btn-outline{border:1px solid rgba(255,255,255,0.06)}
+.btn-ghost{background:transparent}
+.hero{padding:80px 0;text-align:center}
+.title{font-size:38px;margin:0 0 8px}
+.subtitle{color:rgba(255,255,255,0.7);margin:0 0 20px}
+.hero-actions{display:flex;justify-content:center;gap:12px}
+.section-title{font-size:20px;margin:10px 0 18px}
+.portfolio{padding-bottom:30px}
+.masonry{column-count:3;column-gap:18px}
+.masonry-item{break-inside:avoid;margin-bottom:18px;background:var(--surface);border-radius:8px;overflow:hidden;box-shadow:0 8px 20px rgba(0,0,0,0.6)}
+.masonry-item img{width:100%;height:auto;display:block}
+.masonry-item .meta{padding:12px}
+.testimonials{padding:30px 0}
+.slider{display:flex;gap:14px;overflow:hidden}
+.slide{min-width:100%;padding:20px;background:var(--surface-2);border-radius:8px}
+.steps{list-style:decimal;padding-left:20px;color:rgba(255,255,255,0.8)}
+.card{background:var(--surface);padding:18px;border-radius:10px;margin-top:12px}
+.status-card{display:flex;align-items:center;justify-content:space-between}
+.vault-card{min-height:80px}
+.feed-card{min-height:200px}
+.hidden{display:none}
+/* Chat widget */
+.chat-widget{position:fixed;right:18px;bottom:18px;width:320px;background:var(--surface);border-radius:12px;box-shadow:0 20px 50px rgba(0,0,0,0.6);overflow:hidden;border:1px solid rgba(255,255,255,0.04);z-index:80}
+.chat-header{background:linear-gradient(90deg,var(--accent),#00c7ff);padding:12px;color:#031319;font-weight:700}
+.chat-body{padding:12px;max-height:260px;overflow:auto}
+.bot{background:rgba(255,255,255,0.03);padding:10px;border-radius:8px;margin-bottom:8px}
+.chat-input{display:flex;padding:12px;border-top:1px solid rgba(255,255,255,0.02)}
+.chat-input input{flex:1;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--text)}
+/* QR Modal */
+.modal{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:flex;align-items:center;justify-content:center;z-index:90}
+.modal-content{width:420px;background:var(--surface);padding:18px;border-radius:12px;text-align:center}
+.qr{width:220px;height:220px;margin:12px auto}
+.qr-timer{font-weight:700;color:var(--accent);margin-bottom:6px}
+.qr-state{color:rgba(255,255,255,0.7);margin-bottom:12px}
+/* preloader */
+.preloader{position:fixed;left:0;top:0;right:0;bottom:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999}
+.preloader .logo{height:90px;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{transform:scale(1);filter:drop-shadow(0 0 8px var(--accent))}50%{transform:scale(1.04);filter:drop-shadow(0 0 18px var(--accent))}100%{transform:scale(1);filter:drop-shadow(0 0 8px var(--accent))}}
+/* responsive */
+@media (max-width:900px){.masonry{column-count:2}.title{font-size:28px}}
+@media (max-width:540px){.masonry{column-count:1}.container{padding:18px}.hero{padding:40px 0}}
